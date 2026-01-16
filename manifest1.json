@@ -2,7 +2,7 @@
   "name": "Business Discount Manager",
   "short_name": "BusinessApp",
   "description": "Offline Business Discount and Billing Manager",
-  "start_url": "m_app.html",
+  "start_url": "/business-discount-app/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0078d4",
