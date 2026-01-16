@@ -248,3 +248,31 @@ table button:hover {
         font-size: 17px;
     }
 }
+/* =========================
+   CENTER HOME BUTTONS
+========================= */
+.mode-buttons {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mode-buttons button {
+    width: 260px;
+    max-width: 90%;
+    margin: 10px 0;
+}
+
+/* =========================
+   STICKY BACK BUTTON (TOP)
+========================= */
+button.back {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    margin-bottom: 12px;
+}
+
+
