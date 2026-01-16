@@ -30,7 +30,6 @@
     <!-- ================= DISCOUNT ================= -->
     <div ng-if="mode === 'discount'">
 
-        <!-- BACK AT TOP -->
         <button class="back" ng-click="goBack()">⬅ Back</button>
 
         <div class="toolbar">
@@ -92,9 +91,8 @@
     <!-- ================= BILL ================= -->
     <div ng-if="mode === 'bill'">
 
-        <!-- BACK AT TOP -->
         <button class="back" ng-click="goBack()">⬅ Back</button>
-
+        <button class="secondary" ng-click="openBill()">Clear Selected</button>
         <div class="toolbar">
             <input type="text"
                    placeholder="🔍 Search item"
@@ -106,10 +104,12 @@
                 <option ng-repeat="s in billSearchHistory track by $index" value="{{s}}">
             </datalist>
 
-            <select ng-model="billSort">
-                <option value="name">Sort by Name</option>
-                <option value="billPrice">Sort by Price</option>
-            </select>
+           <select ng-model="billSort">
+    <option value="" disabled selected>Sort</option>
+    <option value="name">Sort by Name</option>
+    <option value="billPrice">Sort by Price</option>
+</select>
+
         </div>
 
         <table>
@@ -157,6 +157,48 @@
         <div class="bill-summary">
             Total: ₹ {{totalBill | number:2}}
         </div>
+
+        <!-- FINISH BILL -->
+        <button class="primary" ng-click="finishBill()">✅ Finish Bill</button>
+    </div>
+
+    <!-- ================= FINAL BILL ================= -->
+    <div ng-if="mode === 'billSummary'">
+
+        <button class="back" ng-click="backToBill()">⬅ Back</button>
+
+        <h3 style="text-align:center;margin-top:10px;">🧾 Final Bill</h3>
+        <p style="text-align:center;font-size:14px;color:#666;">
+            Date: {{billDate}}
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="item in finalBillItems">
+                    <td>{{item.name}}</td>
+                    <td>{{item.size}}</td>
+                    <td>₹ {{item.billPrice}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>₹ {{item.billPrice * item.quantity | number:2}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="bill-summary">
+            Grand Total: ₹ {{totalBill | number:2}}
+        </div>
+
+        <button class="secondary" ng-click="printBill()">🖨 Print / PDF</button>
     </div>
 
 </div>

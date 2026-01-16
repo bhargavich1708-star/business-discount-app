@@ -6,6 +6,8 @@ app.controller("DiscountController", function ($scope) {
     $scope.items = JSON.parse(localStorage.getItem("items")) || [];
     $scope.alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     $scope.totalBill = 0;
+    $scope.finalBillItems = [];
+    $scope.billDate = "";
 
     function save() {
         localStorage.setItem("items", JSON.stringify($scope.items));
@@ -26,7 +28,7 @@ app.controller("DiscountController", function ($scope) {
     $scope.openBill = () => {
         $scope.items.forEach(i => {
             i.billSelected = false;
-            i.billPrice = i.finalPrice || i.mrp;
+            i.billPrice = (i.finalPrice > 0) ? i.finalPrice : i.mrp;
             i.quantity = 1;
         });
         $scope.totalBill = 0;
@@ -39,7 +41,7 @@ app.controller("DiscountController", function ($scope) {
     $scope.addRow = () => {
         const item = {
             name: "",
-            size: "",          // ✅ ADDED
+            size: "",
             mrp: "",
             discount: "",
             finalPrice: 0,
@@ -47,11 +49,6 @@ app.controller("DiscountController", function ($scope) {
         };
         $scope.items.push(item);
         save();
-
-        setTimeout(() => {
-            const inputs = document.querySelectorAll("tbody tr:last-child input");
-            if (inputs[1]) inputs[1].focus();
-        }, 50);
     };
 
     $scope.removeRow = (i) => {
@@ -60,8 +57,9 @@ app.controller("DiscountController", function ($scope) {
     };
 
     $scope.updatePrice = (item) => {
-        if (item.mrp !== "" && item.discount !== "") {
-            item.finalPrice = item.mrp - (item.mrp * item.discount / 100);
+        const d = (item.discount === "" || item.discount == null) ? 0 : item.discount;
+        if (item.mrp !== "") {
+            item.finalPrice = item.mrp - (item.mrp * d / 100);
             save();
         }
     };
@@ -90,5 +88,48 @@ app.controller("DiscountController", function ($scope) {
                 $scope.totalBill += (i.billPrice || 0) * (i.quantity || 1);
             }
         });
+    };
+
+    /* FINISH BILL */
+    $scope.finishBill = () => {
+        $scope.finalBillItems = [];
+        $scope.totalBill = 0;
+
+        $scope.items.forEach(i => {
+            if (i.billSelected) {
+                const lineTotal = (i.billPrice || 0) * (i.quantity || 1);
+                $scope.totalBill += lineTotal;
+
+                $scope.finalBillItems.push({
+                    name: i.name,
+                    size: i.size,
+                    billPrice: i.billPrice,
+                    quantity: i.quantity
+                });
+            }
+        });
+
+        const d = new Date();
+        $scope.billDate =
+            String(d.getDate()).padStart(2, "0") + "/" +
+            String(d.getMonth() + 1).padStart(2, "0") + "/" +
+            d.getFullYear();
+
+        $scope.mode = "billSummary";
+    };
+
+    /* BACK FROM FINAL BILL */
+    $scope.backToBill = () => {
+        $scope.items.forEach(i => {
+            i.billSelected = false;
+            i.quantity = 1;
+        });
+        $scope.totalBill = 0;
+        $scope.mode = "bill";
+    };
+
+    /* PRINT */
+    $scope.printBill = () => {
+        window.print();
     };
 });

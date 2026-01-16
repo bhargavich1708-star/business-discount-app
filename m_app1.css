@@ -53,11 +53,20 @@ header p {
     margin-top: 30px;
 }
 
+/* CENTERED HOME BUTTONS */
+.mode-buttons {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .mode-buttons button {
-    width: 220px;
-    max-width: 100%;
+    width: 260px;
+    max-width: 90%;
     padding: 14px;
-    margin: 10px;
+    margin: 10px 0;
     font-size: 16px;
     border-radius: 12px;
     border: none;
@@ -90,6 +99,14 @@ button.back {
     margin-top: 12px;
 }
 
+/* STICKY BACK BUTTON */
+button.back {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    margin-bottom: 12px;
+}
+
 button:hover {
     opacity: 0.95;
     transform: translateY(-1px);
@@ -100,7 +117,7 @@ button:active {
 }
 
 /* =========================
-   TOOLBAR (DISCOUNT MODE)
+   TOOLBAR
 ========================= */
 .toolbar {
     display: flex;
@@ -248,31 +265,48 @@ table button:hover {
         font-size: 17px;
     }
 }
-/* =========================
-   CENTER HOME BUTTONS
-========================= */
-.mode-buttons {
-    min-height: 70vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.mode-buttons button {
-    width: 260px;
-    max-width: 90%;
-    margin: 10px 0;
-}
 
 /* =========================
-   STICKY BACK BUTTON (TOP)
+   PRINT / PDF BILL
 ========================= */
-button.back {
-    position: sticky;
-    top: 10px;
-    z-index: 100;
-    margin-bottom: 12px;
+@media print {
+
+    body {
+        background: #fff;
+    }
+
+    button,
+    input,
+    select,
+    .toolbar,
+    .alphabet-bar {
+        display: none !important;
+    }
+
+    .app-container {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    thead th {
+        background: #fff;
+        border-bottom: 2px solid #000;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+    }
+
+    .bill-summary {
+        font-size: 20px;
+        text-align: right;
+        margin-top: 20px;
+    }
 }
-
-
