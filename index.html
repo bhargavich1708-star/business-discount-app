@@ -30,6 +30,9 @@
     <!-- ================= DISCOUNT ================= -->
     <div ng-if="mode === 'discount'">
 
+        <!-- BACK AT TOP -->
+        <button class="back" ng-click="goBack()">⬅ Back</button>
+
         <div class="toolbar">
             <input type="text" placeholder="🔍 Search item" ng-model="searchText">
             <input type="number" placeholder="Discount %" ng-model="globalDiscount">
@@ -84,12 +87,13 @@
                 </tr>
             </tbody>
         </table>
-
-        <button class="back" ng-click="goBack()">⬅ Back</button>
     </div>
 
     <!-- ================= BILL ================= -->
     <div ng-if="mode === 'bill'">
+
+        <!-- BACK AT TOP -->
+        <button class="back" ng-click="goBack()">⬅ Back</button>
 
         <div class="toolbar">
             <input type="text"
@@ -153,8 +157,6 @@
         <div class="bill-summary">
             Total: ₹ {{totalBill | number:2}}
         </div>
-
-        <button class="back" ng-click="goBack()">⬅ Back</button>
     </div>
 
 </div>
