@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="discountApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Discount Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="manifest" href="manifest1.json">
+    <link rel="stylesheet" href="m_app1.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="DiscountController">
+
+<div class="app-container">
+
+    <!-- HEADER -->
+    <header ng-if="mode !== 'home'">
+        <h2>📊 Business Discount Manager</h2>
+        <p>Smart Pricing & Billing</p>
+    </header>
+
+    <!-- HOME -->
+    <div class="mode-buttons" ng-if="mode === 'home'">
+        <button class="primary" ng-click="openDiscount()">💸 Discount</button>
+        <button class="secondary" ng-click="openBill()">🧾 Bill</button>
+    </div>
+
+    <!-- ================= DISCOUNT ================= -->
+    <div ng-if="mode === 'discount'">
+
+        <div class="toolbar">
+            <input type="text" placeholder="🔍 Search item" ng-model="searchText">
+            <input type="number" placeholder="Discount %" ng-model="globalDiscount">
+
+            <button class="primary" ng-click="applyToAll()">Apply to All</button>
+            <button class="secondary" ng-click="applyToSelected()">Apply to Selected</button>
+            <button class="add" ng-click="addRow()">➕ Add Item</button>
+
+            <span><b>Items:</b> {{items.length}}</span>
+        </div>
+
+        <div class="alphabet-bar">
+            <span ng-repeat="letter in alphabets" ng-click="filterLetter = letter">{{letter}}</span>
+            <span ng-click="filterLetter = ''">ALL</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Item</th>
+                    <th>Size</th>
+                    <th>MRP</th>
+                    <th>Discount %</th>
+                    <th>Final</th>
+                    <th>❌</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="item in items | filter:startsWith(searchText)"
+                    ng-if="!filterLetter || item.name.charAt(0).toUpperCase() === filterLetter">
+
+                    <td><input type="checkbox" ng-model="item.selected"></td>
+                    <td><input type="text" ng-model="item.name"></td>
+                    <td><input type="text" ng-model="item.size" placeholder="Size"></td>
+
+                    <td>
+                        <input type="number" inputmode="numeric"
+                               ng-model="item.mrp"
+                               ng-change="updatePrice(item)">
+                    </td>
+
+                    <td>
+                        <input type="number"
+                               ng-model="item.discount"
+                               ng-change="updatePrice(item)">
+                    </td>
+
+                    <td>₹ {{item.finalPrice | number:2}}</td>
+                    <td><button ng-click="removeRow($index)">❌</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="back" ng-click="goBack()">⬅ Back</button>
+    </div>
+
+    <!-- ================= BILL ================= -->
+    <div ng-if="mode === 'bill'">
+
+        <div class="toolbar">
+            <input type="text"
+                   placeholder="🔍 Search item"
+                   ng-model="billSearch"
+                   ng-change="saveBillSearch(billSearch)"
+                   list="billSuggestions">
+
+            <datalist id="billSuggestions">
+                <option ng-repeat="s in billSearchHistory track by $index" value="{{s}}">
+            </datalist>
+
+            <select ng-model="billSort">
+                <option value="name">Sort by Name</option>
+                <option value="billPrice">Sort by Price</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="item in items | filter:startsWith(billSearch) | orderBy:billSort">
+
+                    <td>
+                        <input type="checkbox"
+                               ng-model="item.billSelected"
+                               ng-change="calculateBill()">
+                        {{item.name}}
+                    </td>
+
+                    <td>{{item.size}}</td>
+
+                    <td>
+                        <input type="number"
+                               ng-model="item.billPrice"
+                               ng-change="calculateBill()">
+                    </td>
+
+                    <td>
+                        <input type="number" min="1"
+                               ng-model="item.quantity"
+                               ng-change="calculateBill()">
+                    </td>
+
+                    <td>
+                        ₹ {{ (item.billSelected ? (item.billPrice * item.quantity) : 0) | number:2 }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="bill-summary">
+            Total: ₹ {{totalBill | number:2}}
+        </div>
+
+        <button class="back" ng-click="goBack()">⬅ Back</button>
+    </div>
+
+</div>
+
+<script src="m_app1.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker1.js");
+}
+</script>
+
+</body>
+</html>

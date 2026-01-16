@@ -1,0 +1,250 @@
+/* =========================
+   GLOBAL RESET & BASE
+========================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(120deg, #eef2f7, #ffffff);
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   APP CONTAINER
+========================= */
+.app-container {
+    width: 96%;
+    max-width: 1100px;
+    margin: 16px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+header h2 {
+    margin: 0;
+    font-weight: 600;
+}
+
+header p {
+    margin-top: 4px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* =========================
+   INITIAL MODE BUTTONS
+========================= */
+.mode-buttons {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.mode-buttons button {
+    width: 220px;
+    max-width: 100%;
+    padding: 14px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* =========================
+   BUTTON STYLES
+========================= */
+button.primary {
+    background: #0078d4;
+    color: #fff;
+}
+
+button.secondary {
+    background: #28a745;
+    color: #fff;
+}
+
+button.add {
+    background: #ff9800;
+    color: #fff;
+}
+
+button.back {
+    background: #6c757d;
+    color: #fff;
+    margin-top: 12px;
+}
+
+button:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   TOOLBAR (DISCOUNT MODE)
+========================= */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.toolbar input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 190px;
+    font-size: 14px;
+}
+
+.toolbar input:focus {
+    border-color: #0078d4;
+    outline: none;
+}
+
+/* =========================
+   ALPHABET FILTER
+========================= */
+.alphabet-bar {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.alphabet-bar span {
+    display: inline-block;
+    margin: 2px;
+    padding: 6px 8px;
+    font-size: 13px;
+    background: #f1f3f5;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.alphabet-bar span:hover {
+    background: #0078d4;
+    color: #fff;
+}
+
+/* =========================
+   TABLE
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+thead th {
+    background: #f1f3f5;
+    font-size: 14px;
+    padding: 10px;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* =========================
+   TABLE INPUTS
+========================= */
+table input[type="text"],
+table input[type="number"] {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* =========================
+   DELETE BUTTON
+========================= */
+table button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+table button:hover {
+    background: #b02a37;
+}
+
+/* =========================
+   BILL SUMMARY
+========================= */
+.bill-summary {
+    margin-top: 16px;
+    padding: 14px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 768px) {
+
+    .toolbar {
+        flex-direction: column;
+    }
+
+    .toolbar input,
+    .toolbar button {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    table input {
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    .bill-summary {
+        text-align: center;
+        font-size: 17px;
+    }
+}
